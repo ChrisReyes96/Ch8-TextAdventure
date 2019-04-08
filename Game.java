@@ -18,7 +18,7 @@
 public class Game 
 {
     private Parser parser;
-    private Room currentRoom;
+    private Room currentRoom, explosionZone;
         
     /**
      * Create the game and initialise its internal map.
@@ -34,30 +34,62 @@ public class Game
      */
     private void createRooms()
     {
-        Room outside, theater, pub, lab, office;
+         Room controlRoom, mechanicalRoom, maintanceRoom, room1, bathroom1, lockerRoom, lobby;
+        Room office, canteenRoom, room2, room3, exit;
       
         // create the rooms
-        outside = new Room("outside the main entrance of the university");
-        theater = new Room("in a lecture theater");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
+        controlRoom = new Room("inside the control room");
+        mechanicalRoom = new Room("in the mechanical room");
+        maintanceRoom = new Room("in the maintance room");
+        room1 = new Room("in room1");
+        bathroom1 = new Room("in the bathroom1");
+        lockerRoom = new Room("in the locker room");
+        lobby = new Room("in the lobby");
+        office = new Room("in Mr. Burns office");
+        canteenRoom = new Room("in the canteen room");
+        room2 = new Room ("in room2");
+        room3 = new Room ("in room3");
+        explosionZone = new Room("in the explosion zone");
+        exit = new Room ("out of the nuclear power plant");
+        
         
         // initialise room exits
-        outside.setExit("east", theater);
-        outside.setExit("south", lab);
-        outside.setExit("west", pub);
+        controlRoom.setExit("east", maintanceRoom);
+        controlRoom.setExit("south", mechanicalRoom);
+        controlRoom.setExit("west", bathroom1);
 
-        theater.setExit("west", outside);
+        mechanicalRoom.setExit("north", controlRoom);
+        mechanicalRoom.setExit("east", explosionZone);
+        
+        maintanceRoom.setExit("east", room1);
+        maintanceRoom.setExit("west", controlRoom);
+        maintanceRoom.setExit("north", lockerRoom);
+        
+        room1.setExit("east", maintanceRoom);
 
-        pub.setExit("east", outside);
+        bathroom1.setExit("north", canteenRoom);
+        bathroom1.setExit("east", controlRoom);
 
-        lab.setExit("north", outside);
-        lab.setExit("east", office);
-
-        office.setExit("west", lab);
-
-        currentRoom = outside;  // start game outside
+        lockerRoom.setExit("south", maintanceRoom);
+        lockerRoom.setExit("west", lobby);
+        
+        lobby.setExit("west", canteenRoom);
+        lobby.setExit("east", lockerRoom);
+        
+        office.setExit("west", room3);
+        office.setExit("north", exit);
+        
+        canteenRoom.setExit("south", bathroom1);
+        canteenRoom.setExit("east", lobby);
+        canteenRoom.setExit("north", room2);
+        
+        room2.setExit("south", canteenRoom);
+        room2.setExit("east", room3);
+        
+        room3.setExit("west", room2);
+        room3.setExit("east", office);
+        
+        currentRoom = controlRoom;  // start game in control room
     }
 
     /**
@@ -84,8 +116,13 @@ public class Game
     private void printWelcome()
     {
         System.out.println();
-        System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
+        System.out.println("Hey Homer Simpson");
+        System.out.println("You fell asleep while working in the nuclear plant");
+        System.out.println("There was an explosion and now the nuclear power plant is "+ 
+         "about to collapse");
+        System.out.println("Find a way to exit the nuclear plant. You have 5 minutes "+
+        "before it collapses");
+        System.out.println("You have 10 moves to exit the nuclear plant");
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
         System.out.println(currentRoom.getLongDescription());
@@ -114,10 +151,17 @@ public class Game
             case GO:
                 goRoom(command);
                 break;
+                
+            case LOOK:
+                look(command);
+                break;
+                
+         
 
             case QUIT:
                 wantToQuit = quit(command);
                 break;
+                
         }
         return wantToQuit;
     }
@@ -131,9 +175,7 @@ public class Game
      */
     private void printHelp() 
     {
-        System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at the university.");
-        System.out.println();
+        
         System.out.println("Your command words are:");
         parser.showCommands();
     }
@@ -158,6 +200,13 @@ public class Game
         if (nextRoom == null) {
             System.out.println("There is no door!");
         }
+        
+        else if (currentRoom == explosionZone){
+            System.out.println("You have entered the explosion zone");
+            System.out.println("The toxic gas in this area has killed you");
+            System.out.println("You lost!");
+            
+        }
         else {
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
@@ -179,4 +228,12 @@ public class Game
             return true;  // signal that we want to quit
         }
     }
+    
+    private void look (Command command)
+    {
+        System.out.println(currentRoom.getLongDescription());
+        System.out.println("items");
+    }
+    
+    
 }
