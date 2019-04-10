@@ -196,18 +196,19 @@ public class Game
 
         // Try to leave current room.
         Room nextRoom = currentRoom.getExit(direction);
-
+        boolean finished = false;
         if (nextRoom == null) {
             System.out.println("There is no door!");
         }
         
-        else if (currentRoom == explosionZone){
+        else if (nextRoom == explosionZone){
             System.out.println("You have entered the explosion zone");
             System.out.println("The toxic gas in this area has killed you");
             System.out.println("You lost!");
-            
+            System.exit(0);
         }
-        else {
+        else if (currentRoom != explosionZone)
+        {
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
         }
@@ -234,6 +235,8 @@ public class Game
         System.out.println(currentRoom.getLongDescription());
         System.out.println("items");
     }
+    
+    
     
     
 }
