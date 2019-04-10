@@ -1,3 +1,4 @@
+
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -19,7 +20,9 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom, explosionZone;
-        
+    
+    //array of items in backpack
+    private String[] backpack;    
     /**
      * Create the game and initialise its internal map.
      */
@@ -27,6 +30,8 @@ public class Game
     {
         createRooms();
         parser = new Parser();
+        //array of size 10 to simiulate backpack
+        backpack = new String[10];
     }
 
     /**
@@ -34,7 +39,7 @@ public class Game
      */
     private void createRooms()
     {
-         Room controlRoom, mechanicalRoom, maintanceRoom, room1, bathroom1, lockerRoom, lobby;
+        Room controlRoom, mechanicalRoom, maintanceRoom, room1, bathroom1, lockerRoom, lobby;
         Room office, canteenRoom, room2, room3, exit;
       
         // create the rooms
