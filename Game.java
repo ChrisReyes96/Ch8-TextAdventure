@@ -20,7 +20,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom, explosionZone;
-    
+    private Inventory inventory; 
     
     /**
      * Create the game and initialise its internal map.
@@ -29,7 +29,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
-        
+        inventory = new Inventory();
     }
 
     /**
@@ -61,7 +61,7 @@ public class Game
         controlRoom.setExit("south", mechanicalRoom);
         controlRoom.setExit("west", bathroom1);
         controlRoom.addItem(new Item("flashlight", 2));
-        controlRoom.addItem(new Item("face mask", 2));
+        controlRoom.addItem(new Item("mask", 2));
 
         mechanicalRoom.setExit("north", controlRoom);
         mechanicalRoom.setExit("east", explosionZone);
@@ -85,7 +85,7 @@ public class Game
         
         lobby.setExit("west", canteenRoom);
         lobby.setExit("east", lockerRoom);
-        lobby.addItem(new Item("water bottle", 2));
+        lobby.addItem(new Item("water", 2));
         
         office.setExit("west", room3);
         office.setExit("north", exit);
@@ -94,7 +94,7 @@ public class Game
         canteenRoom.setExit("south", bathroom1);
         canteenRoom.setExit("east", lobby);
         canteenRoom.setExit("north", room2);
-        canteenRoom.addItem(new Item("Ned Flanders", 50));
+        canteenRoom.addItem(new Item("Ned_Flanders", 50));
         
         room2.setExit("south", canteenRoom);
         room2.setExit("east", room3);
@@ -143,7 +143,7 @@ public class Game
         System.out.println();
         System.out.println(currentRoom.getLongDescription());
     }
-    public void printItemInfo()
+    private void printItemInfo()
     {
         String result = "There is a ";
         ArrayList<Item> items = currentRoom.getItems();
@@ -168,6 +168,19 @@ public class Game
         }
         
         System.out.println(result + " here");
+    }
+    
+     private void printInventory(){
+    	if(inventory.getItems().size() == 0)
+    	{
+    		System.out.println("You are currently not carrying anything");
+    	}
+    	else{
+	    	System.out.println("You are currently carrying: ");
+	    	for(Item i : inventory.getItems()){
+	    		System.out.println("A " + i.getItemDescription());
+	    	}
+	    }
     }
     
     /**
@@ -196,6 +209,10 @@ public class Game
                 
             case LOOK:
                 look(command);
+                break;
+                
+            case PICK:
+                pick(command);
                 break;
 
 
@@ -276,8 +293,26 @@ public class Game
     {
         System.out.println(currentRoom.getLongDescription());
         printItemInfo();
-        
+        printInventory();
     }
     
+    private void pick(Command command){
+    	ArrayList<Item> items = currentRoom.getItems();
+    	for (int i = 0; i < items.size(); i++){
+    		Item item = items.get(i);
+    		if(command.getSecondWord().equals(item.getItemDescription())){
+    			if(inventory.addItem(item)){
+    				currentRoom.removeItem(item);
+    				System.out.println("Picked up item: " + 
+    				item.getItemDescription());
+    			}
+    			else{
+    				System.out.println("Your inventory is full!");    				
+    			}
+    			return;
+    		}
+    	}
+    	System.out.println("That item is not here");
+    }
 
 }
