@@ -1,0 +1,20 @@
+#BlueJ class context
+comment0.target=Item
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ Items\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=descriptionItem\ weight
+comment1.target=Item(java.lang.String,\ int)
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Items\r\n
+comment2.params=
+comment2.target=java.lang.String\ getItemDescription()
+comment2.text=\r\n\ An\ example\ of\ a\ method\ -\ replace\ this\ comment\ with\ your\ own\r\n\r\n\ @param\ \ y\ \ a\ sample\ parameter\ for\ a\ method\r\n\ @return\ \ \ \ the\ sum\ of\ x\ and\ y\r\n
+comment3.params=
+comment3.target=int\ getWeight()
+comment4.params=
+comment4.target=java.lang.String\ getLongDescription()
+comment5.params=descriptionItem
+comment5.target=void\ setItemDescription(java.lang.String)
+comment6.params=weight
+comment6.target=void\ setWeight(int)
+comment7.params=
+comment7.target=java.lang.String\ toString()
+numComments=8

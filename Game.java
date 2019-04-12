@@ -1,4 +1,4 @@
-
+import java.util.ArrayList;
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -21,8 +21,7 @@ public class Game
     private Parser parser;
     private Room currentRoom, explosionZone;
     
-    //array of items in backpack
-    private String[] backpack;    
+    
     /**
      * Create the game and initialise its internal map.
      */
@@ -30,8 +29,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
-        //array of size 10 to simiulate backpack
-        backpack = new String[10];
+        
     }
 
     /**
@@ -62,37 +60,49 @@ public class Game
         controlRoom.setExit("east", maintanceRoom);
         controlRoom.setExit("south", mechanicalRoom);
         controlRoom.setExit("west", bathroom1);
+        controlRoom.addItem(new Item("flashlight", 2));
+        controlRoom.addItem(new Item("face mask", 2));
 
         mechanicalRoom.setExit("north", controlRoom);
         mechanicalRoom.setExit("east", explosionZone);
+        mechanicalRoom.addItem(new Item("hammer", 2)); 
         
         maintanceRoom.setExit("east", room1);
         maintanceRoom.setExit("west", controlRoom);
         maintanceRoom.setExit("north", lockerRoom);
+        maintanceRoom.addItem(new Item("key", 2));
         
         room1.setExit("east", maintanceRoom);
+        room1.addItem(new Item("donuts", 2));
 
         bathroom1.setExit("north", canteenRoom);
         bathroom1.setExit("east", controlRoom);
+        bathroom1.addItem(new Item("gun", 2));
 
         lockerRoom.setExit("south", maintanceRoom);
         lockerRoom.setExit("west", lobby);
+        lockerRoom.addItem(new Item("pillow", 2));
         
         lobby.setExit("west", canteenRoom);
         lobby.setExit("east", lockerRoom);
+        lobby.addItem(new Item("water bottle", 2));
         
         office.setExit("west", room3);
         office.setExit("north", exit);
+        office.addItem(new Item("lighter", 2));
         
         canteenRoom.setExit("south", bathroom1);
         canteenRoom.setExit("east", lobby);
         canteenRoom.setExit("north", room2);
+        canteenRoom.addItem(new Item("Ned Flanders", 50));
         
         room2.setExit("south", canteenRoom);
         room2.setExit("east", room3);
+        room2.addItem(new Item("helmet", 2));
         
         room3.setExit("west", room2);
         room3.setExit("east", office);
+        room3.addItem(new Item("phone", 2));
         
         currentRoom = controlRoom;  // start game in control room
     }
@@ -128,11 +138,38 @@ public class Game
         System.out.println("Find a way to exit the nuclear plant. You have 5 minutes "+
         "before it collapses");
         System.out.println("You have 10 moves to exit the nuclear plant");
+        System.out.println("You have to LOOK for items in the room");
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
         System.out.println(currentRoom.getLongDescription());
     }
-
+    public void printItemInfo()
+    {
+        String result = "There is a ";
+        ArrayList<Item> items = currentRoom.getItems();
+        
+        if (items.size() > 1)
+        {
+            for (int i=0; i <items.size() - 1; i++){
+                result += items.get(i).getItemDescription() + ", a ";
+            }
+            result = result.substring(0, result.length()-2) +
+            "and a " + items.get(items.size() - 1);
+        }
+        
+        else if (items.size() == 1)
+        {
+            result+=  items.get(0);
+        }
+        
+        else 
+        {
+            return;
+        }
+        
+        System.out.println(result + " here");
+    }
+    
     /**
      * Given a command, process (that is: execute) the command.
      * @param command The command to be processed.
@@ -160,8 +197,7 @@ public class Game
             case LOOK:
                 look(command);
                 break;
-                
-         
+
 
             case QUIT:
                 wantToQuit = quit(command);
@@ -216,6 +252,7 @@ public class Game
         {
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
+            
         }
     }
 
@@ -238,10 +275,9 @@ public class Game
     private void look (Command command)
     {
         System.out.println(currentRoom.getLongDescription());
-        System.out.println("items");
+        printItemInfo();
+        
     }
     
-    
-    
-    
+
 }
