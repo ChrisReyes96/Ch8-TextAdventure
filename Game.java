@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class Game 
 {
       
-    
+    private int minutes; //stores minutes left
     private Parser parser;
     private Room currentRoom, explosionZone, dreams;
     private Inventory inventory; 
@@ -32,6 +32,7 @@ public class Game
         createRooms();
         parser = new Parser();
         inventory = new Inventory();
+        minutes = 20; 
     }
     
 
@@ -147,9 +148,9 @@ public class Game
         System.out.println("You fell asleep while working in the nuclear plant");
         System.out.println("There was an explosion and now the nuclear power plant is "+ 
          "about to collapse");
-        System.out.println("Find a way to exit the nuclear plant. You have 5 minutes "+
-        "before it collapses");
-        System.out.println("You have 10 moves to exit the nuclear plant");
+        System.out.println("Find a way to exit the nuclear plant. Going to another room "+
+        "takes about a minute");
+        System.out.println("You have 20 minutes to exit the nuclear plant");
         System.out.println("You have to LOOK for items in the room");
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
@@ -217,6 +218,7 @@ public class Game
 
             case GO:
                 goRoom(command);
+                printTime(); // prints time left every time you move
                 break;
                 
             case LOOK:
@@ -249,7 +251,13 @@ public class Game
         System.out.println("Your command words are:");
         parser.showCommands();
     }
-
+    /**
+     * Print out time left
+     */
+    private void printTime()
+    {
+        System.out.println("You have " + minutes + " minutes left");
+    }
     /** 
      * Try to go in one direction. If there is an exit, enter the new
      * room, otherwise print an error message.
@@ -261,34 +269,45 @@ public class Game
             System.out.println("Go where?");
             return;
         }
-
+        
         String direction = command.getSecondWord();
 
         // Try to leave current room.
         Room nextRoom = currentRoom.getExit(direction);
         boolean finished = false;
+        if(minutes ==0)
+        {
+            System.out.println("The time is over");
+            System.out.println("The nuclear plant has collapsed with you inside");
+            System.out.println("You lost");
+            System.exit(0);
+        }
+        
         if (nextRoom == null) {
             System.out.println("There is no door!");
         }
+        
         
         else if (nextRoom == explosionZone){
             System.out.println("You have entered the explosion zone");
             System.out.println("The toxic gas in this area has killed you");
             System.out.println("You lost!");
             System.exit(0);
+
         }
         
         else if (nextRoom == dreams){
             System.out.println("A piece of the roof has fallen in your head");
             System.out.println("You are unconscious and having a dream");
             System.out.println("You lost 30 seconds ");
-            
+            System.out.println("You are back in the laboratory");
+            minutes = minutes -3;
         }
         else 
         {
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
-            
+            minutes = minutes -1; //every move takes one minute
         }
     }
 
