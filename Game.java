@@ -18,6 +18,8 @@ import java.util.ArrayList;
 
 public class Game 
 {
+      
+    
     private Parser parser;
     private Room currentRoom, explosionZone;
     private Inventory inventory; 
@@ -31,6 +33,7 @@ public class Game
         parser = new Parser();
         inventory = new Inventory();
     }
+    
 
     /**
      * Create all the rooms and link their exits together.
@@ -313,6 +316,6 @@ public class Game
     		}
     	}
     	System.out.println("That item is not here");
-    }
-
-}
+     }
+    
+ }
