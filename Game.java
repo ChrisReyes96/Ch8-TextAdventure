@@ -21,7 +21,7 @@ public class Game
       
     
     private Parser parser;
-    private Room currentRoom, explosionZone;
+    private Room currentRoom, explosionZone, dreams;
     private Inventory inventory; 
     
     /**
@@ -40,21 +40,23 @@ public class Game
      */
     private void createRooms()
     {
-        Room controlRoom, mechanicalRoom, maintanceRoom, room1, bathroom1, lockerRoom, lobby;
-        Room office, canteenRoom, room2, room3, exit;
+        Room controlRoom, mechanicalRoom, maintanceRoom, laboratory, bathroom1, lockerRoom;
+        Room lobby, office, canteenRoom, reception, offices, bathroom2, exit;
       
         // create the rooms
         controlRoom = new Room("inside the control room");
         mechanicalRoom = new Room("in the mechanical room");
         maintanceRoom = new Room("in the maintance room");
-        room1 = new Room("in room1");
-        bathroom1 = new Room("in the bathroom1");
+        laboratory = new Room("in the laboratory");
+        dreams = new Room ("in a Homer Simpson dream");
+        bathroom1 = new Room("in the bathroom 1");
         lockerRoom = new Room("in the locker room");
         lobby = new Room("in the lobby");
         office = new Room("in Mr. Burns office");
         canteenRoom = new Room("in the canteen room");
-        room2 = new Room ("in room2");
-        room3 = new Room ("in room3");
+        offices = new Room ("in the offices");
+        reception = new Room ("in the reception");
+        bathroom2 = new Room ("in room3");
         explosionZone = new Room("in the explosion zone");
         exit = new Room ("out of the nuclear power plant");
         
@@ -63,49 +65,56 @@ public class Game
         controlRoom.setExit("east", maintanceRoom);
         controlRoom.setExit("south", mechanicalRoom);
         controlRoom.setExit("west", bathroom1);
-        controlRoom.addItem(new Item("flashlight", 2));
-        controlRoom.addItem(new Item("mask", 2));
+        controlRoom.addItem(new Item("flashlight", 1));
+        controlRoom.addItem(new Item("mask", 1));
 
         mechanicalRoom.setExit("north", controlRoom);
         mechanicalRoom.setExit("east", explosionZone);
-        mechanicalRoom.addItem(new Item("hammer", 2)); 
+        mechanicalRoom.addItem(new Item("hammer", 1)); 
+        mechanicalRoom.addItem(new Item("key", 1)); 
         
-        maintanceRoom.setExit("east", room1);
+        maintanceRoom.setExit("east", laboratory);
         maintanceRoom.setExit("west", controlRoom);
         maintanceRoom.setExit("north", lockerRoom);
-        maintanceRoom.addItem(new Item("key", 2));
+        maintanceRoom.addItem(new Item("key2", 1));
         
-        room1.setExit("east", maintanceRoom);
-        room1.addItem(new Item("donuts", 2));
+        laboratory.setExit("east", maintanceRoom);
+        laboratory.setExit("north", dreams);
+        laboratory.addItem(new Item("donuts", 1));
+        
+        dreams.setExit("south", laboratory);
 
         bathroom1.setExit("north", canteenRoom);
         bathroom1.setExit("east", controlRoom);
-        bathroom1.addItem(new Item("gun", 2));
+        bathroom1.addItem(new Item("gun", 1));
 
         lockerRoom.setExit("south", maintanceRoom);
         lockerRoom.setExit("west", lobby);
-        lockerRoom.addItem(new Item("pillow", 2));
+        lockerRoom.addItem(new Item("pillow", 1));
         
         lobby.setExit("west", canteenRoom);
         lobby.setExit("east", lockerRoom);
-        lobby.addItem(new Item("water", 2));
+        lobby.addItem(new Item("water", 1));
         
-        office.setExit("west", room3);
+        office.setExit("west", bathroom2);
         office.setExit("north", exit);
-        office.addItem(new Item("lighter", 2));
+        office.addItem(new Item("lighter", 1));
         
         canteenRoom.setExit("south", bathroom1);
         canteenRoom.setExit("east", lobby);
-        canteenRoom.setExit("north", room2);
+        canteenRoom.setExit("north", offices);
         canteenRoom.addItem(new Item("Ned_Flanders", 50));
         
-        room2.setExit("south", canteenRoom);
-        room2.setExit("east", room3);
-        room2.addItem(new Item("helmet", 2));
+        offices.setExit("south", canteenRoom);
+        offices.setExit("north", reception);
+        offices.setExit("east", bathroom2); 
+        offices.addItem(new Item("helmet", 1));
         
-        room3.setExit("west", room2);
-        room3.setExit("east", office);
-        room3.addItem(new Item("phone", 2));
+        reception.setExit("south", offices);
+        
+        bathroom2.setExit("west", offices);
+        bathroom2.setExit("east", office);
+        bathroom2.addItem(new Item("phone", 1));
         
         currentRoom = controlRoom;  // start game in control room
     }
@@ -268,7 +277,14 @@ public class Game
             System.out.println("You lost!");
             System.exit(0);
         }
-        else if (currentRoom != explosionZone)
+        
+        else if (nextRoom == dreams){
+            System.out.println("A piece of the roof has fallen in your head");
+            System.out.println("You are unconscious and having a dream");
+            System.out.println("You lost 30 seconds ");
+            
+        }
+        else 
         {
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
