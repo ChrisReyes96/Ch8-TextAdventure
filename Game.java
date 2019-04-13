@@ -1,19 +1,19 @@
 import java.util.ArrayList;
 /**
- *  This class is the main class of the "World of Zuul" application. 
- *  "World of Zuul" is a very simple, text based adventure game.  Users 
- *  can walk around some scenery. That's all. It should really be extended 
- *  to make it more interesting!
+ *  This class is the main class of the "Homer Simpson" application. 
+ *  "Homer Simpson" is a text based adventure game.  Users 
+ *  can walk around some scenery. Pick items, look for information in rooms. 
  * 
  *  To play this game, create an instance of this class and call the "play"
  *  method.
  * 
  *  This main class creates and initialises all the others: it creates all
- *  rooms, creates the parser and starts the game.  It also evaluates and
- *  executes the commands that the parser returns.
+ *  rooms, creates the parser and starts the game. Creates and inventory and items to add
+ *  to the inventory 
+ *  It also evaluates and executes the commands that the parser returns.
  * 
- * @author  Michael Kölling and David J. Barnes
- * @version 2011.08.10
+ * @author  Christopher Reyes
+ * @version 04/13/2019
  */
 
 public class Game 
@@ -54,7 +54,7 @@ public class Game
         lockerRoom = new Room("in the locker room");
         lobby = new Room("in the lobby");
         office = new Room("in Mr. Burns office");
-        canteenRoom = new Room("in the canteen room");
+        canteenRoom = new Room("in the canteen room. Ned Flanders is here. TALK to him");
         offices = new Room ("in the offices");
         reception = new Room ("in the reception");
         bathroom2 = new Room ("in room3");
@@ -104,7 +104,7 @@ public class Game
         canteenRoom.setExit("south", bathroom1);
         canteenRoom.setExit("east", lobby);
         canteenRoom.setExit("north", offices);
-        canteenRoom.addItem(new Item("Ned_Flanders", 50));
+        
         
         offices.setExit("south", canteenRoom);
         offices.setExit("north", reception);
@@ -228,7 +228,10 @@ public class Game
             case PICK:
                 pick(command);
                 break;
-
+                
+            case DROP:
+                drop(command);
+                break;
 
             case QUIT:
                 wantToQuit = quit(command);
@@ -353,4 +356,17 @@ public class Game
     	System.out.println("That item is not here");
      }
     
+     
+     public void drop(Command command){
+    	ArrayList<Item> items = inventory.getItems();
+    	for (int i = 0; i < items.size(); i++){
+    		Item item = items.get(i);
+    		if(command.getSecondWord().equals(item.getItemDescription())){
+    			inventory.removeItem(item);
+    			currentRoom.addItem(item);
+    			System.out.println("Dropped item: " + item.getItemDescription());
+    			break;
+    		}
+    	}
+    }
  }
