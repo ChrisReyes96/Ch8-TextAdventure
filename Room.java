@@ -5,15 +5,18 @@ import java.util.ArrayList;
 /**
  * Class Room - a room in an adventure game.
  *
- * This class is part of the "World of Zuul" application. 
- * "World of Zuul" is a very simple, text based adventure game.  
+ * This class is part of the "Homer Simpson" application. 
+  
  *
  * A "Room" represents one location in the scenery of the game.  It is 
  * connected to other rooms via exits.  For each existing exit, the room 
  * stores a reference to the neighboring room.
+ * A room also stores items.
  * 
  * @author  Michael Kölling and David J. Barnes
+ * @author Christopher Reyes
  * @version 2011.08.10
+ * @version 04/13/2019
  */
 
 public class Room 
@@ -62,8 +65,7 @@ public class Room
     public String getLongDescription()
     {
         return "You are " + description + ".\n" + getExitString()+ ".\n";
-        
-        
+
     }
 
     /**
@@ -92,17 +94,29 @@ public class Room
         return exits.get(direction);
     }
     
+    /**
+     * Adds item to the array list item.
+     * @param item to store the item on the array list.
+     */
     public void addItem(Item item)
     {
         items.add(item);
     }
     
+    /**
+     * Removes item from the array list item.
+     * @param item to remove the item from the array list.
+     */
     public void removeItem(Item item)
     {
         items.remove(item);
         
     }
     
+    /**
+     * Gets an item from the array list items.
+     * @return The selected item from the array list.
+     */
     public ArrayList<Item> getItems ()
     {
         return items;

@@ -2,8 +2,8 @@ import java.util.ArrayList;
 /**
  *  This class is the main class of the "Homer Simpson" application. 
  *  "Homer Simpson" is a text based adventure game.  Users 
- *  can walk around some scenery. Pick items, look for information in rooms. 
- * 
+ *  can walk around some scenery. Pick and drop items, look for information in rooms. 
+ *  Non-player characters provide clues. 
  *  To play this game, create an instance of this class and call the "play"
  *  method.
  * 
@@ -262,7 +262,7 @@ public class Game
     }
     
      /**
-     * Print out time left
+     * Print out time left.
      */
     private void printTime()
     {
@@ -271,7 +271,8 @@ public class Game
     
      /** 
      * Try to go in one direction. If there is an exit, enter the new
-     * room, otherwise print an error message.
+     * room, otherwise print an error message. Entering some specific rooms can 
+     * provide some clues or affect the time left to win the game. 
      */
     private void goRoom(Command command) 
     {
@@ -298,7 +299,7 @@ public class Game
             System.out.println("There is no door!");
         }
         
-        
+        // trap door. Makes you lose game
         else if (nextRoom == explosionZone){
             System.out.println("You have entered the explosion zone");
             System.out.println("The toxic gas in this area has killed you");
@@ -306,7 +307,7 @@ public class Game
             System.exit(0);
 
         }
-        
+        //npc located here
         else if (nextRoom == canteenRoom){
             System.out.println("Ned has a clue for you: ");
             System.out.println("Ned: Mr.Burns is so selfish. ");
@@ -315,6 +316,7 @@ public class Game
             System.out.println("Ned: 1 North, 3 East. It's all I can say, good luck! ");
             currentRoom = nextRoom;
         }
+        // npc is here
         else if (nextRoom == mechanicalRoom){
             System.out.println("Hey dad, don't worry about me. I will be fine");
             System.out.println("But you are going in the wrong direction.");
