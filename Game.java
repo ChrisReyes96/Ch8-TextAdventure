@@ -21,7 +21,7 @@ public class Game
       
     private int minutes; //stores minutes left
     private Parser parser;
-    private Room currentRoom, explosionZone, dreams;
+    private Room currentRoom, explosionZone, dreams, canteenRoom, mechanicalRoom;
     private Inventory inventory; 
     
     /**
@@ -37,16 +37,16 @@ public class Game
     
 
     /**
-     * Create all the rooms and link their exits together.
+     * Create all the rooms, items in the rooms and link their exits together.
      */
     private void createRooms()
     {
-        Room controlRoom, mechanicalRoom, maintanceRoom, laboratory, bathroom1, lockerRoom;
-        Room lobby, office, canteenRoom, reception, offices, bathroom2, exit;
+        Room controlRoom, maintanceRoom, laboratory, bathroom1, lockerRoom;
+        Room office, lobby, reception, offices, bathroom2, exit;
       
         // create the rooms
         controlRoom = new Room("inside the control room");
-        mechanicalRoom = new Room("in the mechanical room");
+        mechanicalRoom = new Room("in the mechanical room. Bart Simpons is here");
         maintanceRoom = new Room("in the maintance room");
         laboratory = new Room("in the laboratory");
         dreams = new Room ("in a Homer Simpson dream");
@@ -54,10 +54,10 @@ public class Game
         lockerRoom = new Room("in the locker room");
         lobby = new Room("in the lobby");
         office = new Room("in Mr. Burns office");
-        canteenRoom = new Room("in the canteen room. Ned Flanders is here. TALK to him");
+        canteenRoom = new Room("in the canteen room. Ned Flanders is here.");
         offices = new Room ("in the offices");
         reception = new Room ("in the reception");
-        bathroom2 = new Room ("in room3");
+        bathroom2 = new Room ("in the bathroom2");
         explosionZone = new Room("in the explosion zone");
         exit = new Room ("out of the nuclear power plant");
         
@@ -156,6 +156,10 @@ public class Game
         System.out.println();
         System.out.println(currentRoom.getLongDescription());
     }
+    
+    /**
+     * Print out the item information in each room
+     */
     private void printItemInfo()
     {
         String result = "There is a ";
@@ -183,17 +187,20 @@ public class Game
         System.out.println(result + " here");
     }
     
+    /**
+     * Print out the inventory
+     */
      private void printInventory(){
-    	if(inventory.getItems().size() == 0)
-    	{
-    		System.out.println("You are currently not carrying anything");
-    	}
-    	else{
-	    	System.out.println("You are currently carrying: ");
-	    	for(Item i : inventory.getItems()){
-	    		System.out.println("A " + i.getItemDescription());
-	    	}
-	    }
+        if(inventory.getItems().size() == 0)
+        {
+            System.out.println("You are currently not carrying anything");
+        }
+        else{
+            System.out.println("You are currently carrying: ");
+            for(Item i : inventory.getItems()){
+                System.out.println("A " + i.getItemDescription());
+            }
+        }
     }
     
     /**
@@ -245,8 +252,7 @@ public class Game
 
     /**
      * Print out some help information.
-     * Here we print some stupid, cryptic message and a list of the 
-     * command words.
+     * 
      */
     private void printHelp() 
     {
@@ -254,14 +260,16 @@ public class Game
         System.out.println("Your command words are:");
         parser.showCommands();
     }
-    /**
+    
+     /**
      * Print out time left
      */
     private void printTime()
     {
         System.out.println("You have " + minutes + " minutes left");
     }
-    /** 
+    
+     /** 
      * Try to go in one direction. If there is an exit, enter the new
      * room, otherwise print an error message.
      */
@@ -299,6 +307,20 @@ public class Game
 
         }
         
+        else if (nextRoom == canteenRoom){
+            System.out.println("Ned has a clue for you: ");
+            System.out.println("Ned: Mr.Burns is so selfish. ");
+            System.out.println("Ned: In case of any emergency, he would be the first one" +
+            "to get out of here");
+            System.out.println("Ned: 1 North, 3 East. It's all I can say, good luck! ");
+            currentRoom = nextRoom;
+        }
+        else if (nextRoom == mechanicalRoom){
+            System.out.println("Hey dad, don't worry about me. I will be fine");
+            System.out.println("But you are going in the wrong direction.");
+            currentRoom = nextRoom;
+        }
+        
         else if (nextRoom == dreams){
             System.out.println("A piece of the roof has fallen in your head");
             System.out.println("You are unconscious and having a dream");
@@ -306,6 +328,7 @@ public class Game
             System.out.println("You are back in the laboratory");
             minutes = minutes -3;
         }
+        
         else 
         {
             currentRoom = nextRoom;
@@ -314,7 +337,7 @@ public class Game
         }
     }
 
-    /** 
+     /** 
      * "Quit" was entered. Check the rest of the command to see
      * whether we really quit the game.
      * @return true, if this command quits the game, false otherwise.
@@ -330,6 +353,10 @@ public class Game
         }
     }
     
+     /**
+     * "Look" was entered. Look for information of a room and its items.
+     * @param command The command to be processed.
+     */
     private void look (Command command)
     {
         System.out.println(currentRoom.getLongDescription());
@@ -337,26 +364,34 @@ public class Game
         printInventory();
     }
     
+     /**
+     * "Pick" command. Picks items in rooms. Checks if inventory is full.
+     * Checks if items exists in the current room.
+     * @param command The command to be processed.
+     */
     private void pick(Command command){
-    	ArrayList<Item> items = currentRoom.getItems();
-    	for (int i = 0; i < items.size(); i++){
-    		Item item = items.get(i);
-    		if(command.getSecondWord().equals(item.getItemDescription())){
-    			if(inventory.addItem(item)){
-    				currentRoom.removeItem(item);
-    				System.out.println("Picked up item: " + 
-    				item.getItemDescription());
-    			}
-    			else{
-    				System.out.println("Your inventory is full!");    				
-    			}
-    			return;
-    		}
-    	}
-    	System.out.println("That item is not here");
-     }
-    
+        ArrayList<Item> items = currentRoom.getItems();
+        for (int i = 0; i < items.size(); i++){
+            Item item = items.get(i);
+            if(command.getSecondWord().equals(item.getItemDescription())){
+                if(inventory.addItem(item)){
+                    currentRoom.removeItem(item);
+                    System.out.println("Picked up item: " + 
+                    item.getItemDescription());
+                }
+                else{
+                    System.out.println("Your inventory is full!");                  
+                }
+                return;
+            }
+        }
+        System.out.println("That item is not here");
+    }
      
+     /**
+     * "Drop" command. Drops item contained in inventory.
+     * @param command The command to be processed.
+     */
      public void drop(Command command){
     	ArrayList<Item> items = inventory.getItems();
     	for (int i = 0; i < items.size(); i++){
