@@ -1,12 +1,12 @@
 #BlueJ class context
 comment0.target=Game
-comment0.text=\r\n\ \ This\ class\ is\ the\ main\ class\ of\ the\ "Homer\ Simpson"\ application.\ \r\n\ \ "Homer\ Simpson"\ is\ a\ text\ based\ adventure\ game.\ \ Users\ \r\n\ \ can\ walk\ around\ some\ scenery.\ Pick\ items,\ look\ for\ information\ in\ rooms.\ \r\n\ \r\n\ \ To\ play\ this\ game,\ create\ an\ instance\ of\ this\ class\ and\ call\ the\ "play"\r\n\ \ method.\r\n\ \r\n\ \ This\ main\ class\ creates\ and\ initialises\ all\ the\ others\:\ it\ creates\ all\r\n\ \ rooms,\ creates\ the\ parser\ and\ starts\ the\ game.\ Creates\ and\ inventory\ and\ items\ to\ add\r\n\ \ to\ the\ inventory\ \r\n\ \ It\ also\ evaluates\ and\ executes\ the\ commands\ that\ the\ parser\ returns.\r\n\ \r\n\ @author\ \ Christopher\ Reyes\r\n\ @version\ 04/13/2019\r\n
+comment0.text=\r\n\ \ This\ class\ is\ the\ main\ class\ of\ the\ "Homer\ Simpson"\ application.\ \r\n\ \ "Homer\ Simpson"\ is\ a\ text\ based\ adventure\ game.\ \ Users\ \r\n\ \ can\ walk\ around\ some\ scenery.\ Pick\ and\ drop\ items,\ look\ for\ information\ in\ rooms.\ \r\n\ \ Non-player\ characters\ provide\ clues.\ \r\n\ \ To\ play\ this\ game,\ create\ an\ instance\ of\ this\ class\ and\ call\ the\ "play"\r\n\ \ method.\r\n\ \r\n\ \ This\ main\ class\ creates\ and\ initialises\ all\ the\ others\:\ it\ creates\ all\r\n\ \ rooms,\ creates\ the\ parser\ and\ starts\ the\ game.\ Creates\ and\ inventory\ and\ items\ to\ add\r\n\ \ to\ the\ inventory\ \r\n\ \ It\ also\ evaluates\ and\ executes\ the\ commands\ that\ the\ parser\ returns.\r\n\ \r\n\ @author\ \ Christopher\ Reyes\r\n\ @version\ 04/13/2019\r\n
 comment1.params=
 comment1.target=Game()
 comment1.text=\r\n\ Create\ the\ game\ and\ initialise\ its\ internal\ map.\r\n
 comment10.params=command
 comment10.target=void\ goRoom(Command)
-comment10.text=\ \r\n\ Try\ to\ go\ in\ one\ direction.\ If\ there\ is\ an\ exit,\ enter\ the\ new\r\n\ room,\ otherwise\ print\ an\ error\ message.\r\n
+comment10.text=\ \r\n\ Try\ to\ go\ in\ one\ direction.\ If\ there\ is\ an\ exit,\ enter\ the\ new\r\n\ room,\ otherwise\ print\ an\ error\ message.\ Entering\ some\ specific\ rooms\ can\ \r\n\ provide\ some\ clues\ or\ affect\ the\ time\ left\ to\ win\ the\ game.\ \r\n
 comment11.params=command
 comment11.target=boolean\ quit(Command)
 comment11.text=\ \r\n\ "Quit"\ was\ entered.\ Check\ the\ rest\ of\ the\ command\ to\ see\r\n\ whether\ we\ really\ quit\ the\ game.\r\n\ @return\ true,\ if\ this\ command\ quits\ the\ game,\ false\ otherwise.\r\n
@@ -42,5 +42,5 @@ comment8.target=void\ printHelp()
 comment8.text=\r\n\ Print\ out\ some\ help\ information.\r\n\ \r\n
 comment9.params=
 comment9.target=void\ printTime()
-comment9.text=\r\n\ Print\ out\ time\ left\r\n
+comment9.text=\r\n\ Print\ out\ time\ left.\r\n
 numComments=15

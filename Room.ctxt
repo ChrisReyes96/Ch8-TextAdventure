@@ -1,6 +1,6 @@
 #BlueJ class context
 comment0.target=Room
-comment0.text=\r\n\ Class\ Room\ -\ a\ room\ in\ an\ adventure\ game.\r\n\r\n\ This\ class\ is\ part\ of\ the\ "World\ of\ Zuul"\ application.\ \r\n\ "World\ of\ Zuul"\ is\ a\ very\ simple,\ text\ based\ adventure\ game.\ \ \r\n\r\n\ A\ "Room"\ represents\ one\ location\ in\ the\ scenery\ of\ the\ game.\ \ It\ is\ \r\n\ connected\ to\ other\ rooms\ via\ exits.\ \ For\ each\ existing\ exit,\ the\ room\ \r\n\ stores\ a\ reference\ to\ the\ neighboring\ room.\r\n\ \r\n\ @author\ \ Michael\ K\u00F6lling\ and\ David\ J.\ Barnes\r\n\ @version\ 2011.08.10\r\n
+comment0.text=\r\n\ Class\ Room\ -\ a\ room\ in\ an\ adventure\ game.\r\n\r\n\ This\ class\ is\ part\ of\ the\ "Homer\ Simpson"\ application.\ \r\n\ \ \r\n\r\n\ A\ "Room"\ represents\ one\ location\ in\ the\ scenery\ of\ the\ game.\ \ It\ is\ \r\n\ connected\ to\ other\ rooms\ via\ exits.\ \ For\ each\ existing\ exit,\ the\ room\ \r\n\ stores\ a\ reference\ to\ the\ neighboring\ room.\r\n\ A\ room\ also\ stores\ items.\r\n\ \r\n\ @author\ \ Michael\ K\u00F6lling\ and\ David\ J.\ Barnes\r\n\ @author\ Christopher\ Reyes\r\n\ @version\ 2011.08.10\r\n\ @version\ 04/13/2019\r\n
 comment1.params=description
 comment1.target=Room(java.lang.String)
 comment1.text=\r\n\ Create\ a\ room\ described\ "description".\ Initially,\ it\ has\r\n\ no\ exits.\ "description"\ is\ something\ like\ "a\ kitchen"\ or\r\n\ "an\ open\ court\ yard".\r\n\ @param\ description\ The\ room's\ description.\r\n
@@ -21,8 +21,11 @@ comment6.target=Room\ getExit(java.lang.String)
 comment6.text=\r\n\ Return\ the\ room\ that\ is\ reached\ if\ we\ go\ from\ this\ room\ in\ direction\r\n\ "direction".\ If\ there\ is\ no\ room\ in\ that\ direction,\ return\ null.\r\n\ @param\ direction\ The\ exit's\ direction.\r\n\ @return\ The\ room\ in\ the\ given\ direction.\r\n
 comment7.params=item
 comment7.target=void\ addItem(Item)
+comment7.text=\r\n\ Adds\ item\ to\ the\ array\ list\ item.\r\n\ @param\ item\ to\ store\ the\ item\ on\ the\ array\ list.\r\n
 comment8.params=item
 comment8.target=void\ removeItem(Item)
+comment8.text=\r\n\ Removes\ item\ from\ the\ array\ list\ item.\r\n\ @param\ item\ to\ remove\ the\ item\ from\ the\ array\ list.\r\n
 comment9.params=
 comment9.target=java.util.ArrayList\ getItems()
+comment9.text=\r\n\ Gets\ an\ item\ from\ the\ array\ list\ items.\r\n\ @return\ The\ selected\ item\ from\ the\ array\ list.\r\n
 numComments=10
